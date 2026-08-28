@@ -34,6 +34,7 @@ autorizar:
 | `examTypes` | Lista de exames na seção Exames |
 | `insurances` | Convênios aceitos |
 | `contact.email` | E-mail no rodapé |
+| `images.*` e `team[].photo` | Fotografias (hoje todas em espaço reservado) |
 
 > A referência pública aos ~27 anos de experiência e à atuação em Neonatologia
 > vem de publicação jornalística local de 2025. `yearsExperience` está como
@@ -41,15 +42,15 @@ autorizar:
 
 ## Fotografias
 
-As imagens são espaços reservados nomeados. Para publicar uma foto oficial,
-basta salvar o arquivo com o nome correto em `public/images/` — sem tocar no
-código. Consulte **[`public/images/README.md`](public/images/README.md)** para a
-tabela completa de arquivos, proporções e orientações de fotografia.
+Todos os espaços de fotografia estão **vazios**, aguardando as imagens oficiais
+da clínica. Cada um exibe um reservado sóbrio — nenhuma imagem genérica é
+apresentada como foto real da unidade.
 
-Três fotos já publicadas vieram do perfil oficial **@clinicasabino**: a recepção
-(topo da página), o Dr. Clodoaldo (seção Profissional) e a vista da cidade
-(Localização). Os demais espaços exibem um reservado sóbrio enquanto aguardam as
-fotos oficiais — nenhuma imagem genérica é apresentada como foto real da unidade.
+Os campos ficam em `clinicData.images` (e `team[].photo` para o retrato do
+médico). Para publicar uma foto: salve o arquivo em `public/images/` e escreva o
+caminho no campo correspondente. A tabela completa de arquivos, campos,
+proporções e orientações de fotografia está em
+**[`public/images/README.md`](public/images/README.md)**.
 
 ## Comandos
 

@@ -2,7 +2,7 @@ import { Button } from '../components/Button'
 import { ClinicImage } from '../components/ClinicImage'
 import { clinicData, whatsappUrl } from '../lib/clinic-data'
 
-const { copy, address } = clinicData
+const { copy, address, images } = clinicData
 
 export function Hero() {
   return (
@@ -40,7 +40,7 @@ export function Hero() {
 
         {/* Fotografia — grande, sem efeitos: a composição carrega o peso visual. */}
         <ClinicImage
-          src="/images/clinic/hero.jpg"
+          src={images.hero}
           alt={`Recepção da ${clinicData.name}, em ${address.city} — ${address.state}`}
           ratio="4/5"
           priority

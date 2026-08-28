@@ -3,14 +3,14 @@ import { Button } from '../components/Button'
 import { ClinicImage } from '../components/ClinicImage'
 import { clinicData, whatsappUrl } from '../lib/clinic-data'
 
-const { copy, examTypes } = clinicData
+const { copy, examTypes, images } = clinicData
 
 export function Exams() {
   return (
     <section id="exames" className="bg-(--color-surface) py-20 sm:py-28 lg:py-32">
       <div className="shell grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
         <ClinicImage
-          src="/images/clinic/laboratory.jpg"
+          src={images.laboratory}
           alt="Coleta de exames laboratoriais na Sabino Especialidades Médicas"
           ratio="4/3"
           placeholderLabel="Coleta e laboratório"

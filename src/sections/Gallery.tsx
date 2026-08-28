@@ -2,7 +2,7 @@ import { Reveal } from '../components/Reveal'
 import { ClinicImage } from '../components/ClinicImage'
 import { clinicData } from '../lib/clinic-data'
 
-const { copy } = clinicData
+const { copy, images } = clinicData
 
 /**
  * Estrutura da clínica: uma horizontal grande e duas verticais menores.
@@ -24,20 +24,20 @@ export function Gallery() {
 
         <div className="mt-14 grid gap-5 lg:grid-cols-2">
           <ClinicImage
-            src="/images/clinic/facade.jpg"
+            src={images.facade}
             alt={`Fachada da ${clinicData.name}`}
             ratio="21/9"
             placeholderLabel="Fachada da clínica"
             className="lg:col-span-2"
           />
           <ClinicImage
-            src="/images/clinic/reception-wide.jpg"
+            src={images.receptionWide}
             alt="Ambiente de recepção da clínica"
             ratio="3/2"
             placeholderLabel="Sala de espera"
           />
           <ClinicImage
-            src="/images/clinic/consulting-room-wide.jpg"
+            src={images.consultingRoomWide}
             alt="Consultório de atendimento da clínica"
             ratio="3/2"
             placeholderLabel="Consultório"

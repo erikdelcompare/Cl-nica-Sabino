@@ -3,7 +3,7 @@ import { Button } from '../components/Button'
 import { ClinicImage } from '../components/ClinicImage'
 import { clinicData, whatsappUrl } from '../lib/clinic-data'
 
-const { copy } = clinicData
+const { copy, images } = clinicData
 
 const acompanhamento = [
   'Consultas pediátricas e avaliação clínica',
@@ -54,7 +54,7 @@ export function Pediatria() {
         </Reveal>
 
         <ClinicImage
-          src="/images/clinic/pediatrics.jpg"
+          src={images.pediatrics}
           alt="Atendimento pediátrico na Sabino Especialidades Médicas"
           ratio="4/5"
           placeholderLabel="Atendimento pediátrico"

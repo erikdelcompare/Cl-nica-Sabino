@@ -118,7 +118,7 @@ export const clinicData = {
       secondarySpecialty: 'Neonatologia',
       crm: '', // A CONFIRMAR
       rqe: '', // A CONFIRMAR
-      photo: '/images/team/dr-clodoaldo.jpg',
+      photo: '', // A CONFIRMAR — salvar em public/images/team/ e apontar aqui
       bio: 'Médico com trajetória dedicada à Pediatria e ao cuidado infantil, com atendimento voltado ao acompanhamento da saúde das crianças e à orientação das famílias em São Gabriel do Oeste.',
     },
   ],
@@ -129,6 +129,31 @@ export const clinicData = {
    * Deixe `null` até a clínica autorizar o uso — a faixa não é renderizada.
    */
   yearsExperience: null as number | null,
+
+  // ─── Fotografias ────────────────────────────────────────────────────────
+  /**
+   * Espaços de fotografia do site. Todos vazios: enquanto não houver foto
+   * oficial, o site mostra um espaço reservado sóbrio — nunca uma imagem
+   * genérica no lugar de uma foto real da clínica.
+   *
+   * PARA PUBLICAR UMA FOTO
+   *   1. salve o arquivo em `public/images/clinic/` (ou `team/`);
+   *   2. escreva o caminho no campo correspondente, ex.:
+   *        hero: '/images/clinic/hero.jpg'
+   *
+   * Proporções sugeridas e orientações de fotografia: public/images/README.md
+   */
+  images: {
+    hero: '', // topo da página — 4:5 (vertical)
+    reception: '', // seção "A Clínica", imagem principal — 4:5 (vertical)
+    consultingRoom: '', // seção "A Clínica", recorte menor — 1:1 (quadrada)
+    pediatrics: '', // seção "Pediatria" — 4:5 (vertical)
+    laboratory: '', // seção "Exames" — 4:3 (horizontal)
+    facade: '', // galeria, imagem larga — 21:9 (panorâmica)
+    receptionWide: '', // galeria, inferior esquerda — 3:2 (horizontal)
+    consultingRoomWide: '', // galeria, inferior direita — 3:2 (horizontal)
+    city: '', // seção "Localização" — 21:9 (panorâmica)
+  },
 
   // ─── Textos institucionais ──────────────────────────────────────────────
   copy: {

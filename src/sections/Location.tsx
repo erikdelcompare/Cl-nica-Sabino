@@ -4,7 +4,7 @@ import { ClinicImage } from '../components/ClinicImage'
 import { clinicData, mapsDirectionsUrl, mapsEmbedUrl, whatsappUrl } from '../lib/clinic-data'
 import { PhoneIcon, PinIcon } from '../components/icons'
 
-const { copy, address, contact, openingHours } = clinicData
+const { copy, address, contact, openingHours, images } = clinicData
 
 export function Location() {
   return (
@@ -84,7 +84,7 @@ export function Location() {
 
           <div className="space-y-5">
             <ClinicImage
-              src="/images/clinic/city.jpg"
+              src={images.city}
               alt={`Vista de ${address.city} — ${address.state}`}
               ratio="21/9"
               caption={`${address.city} — ${address.state}`}

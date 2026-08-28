@@ -3,7 +3,7 @@ import { ClinicImage } from '../components/ClinicImage'
 import { clinicData } from '../lib/clinic-data'
 import { InstagramIcon } from '../components/icons'
 
-const { copy, address, contact } = clinicData
+const { copy, address, contact, images } = clinicData
 
 export function About() {
   return (
@@ -12,14 +12,14 @@ export function About() {
         {/* Composição fotográfica: uma vertical grande + um recorte menor. */}
         <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
           <ClinicImage
-            src="/images/clinic/reception.jpg"
+            src={images.reception}
             alt={`Recepção da ${clinicData.name}`}
             ratio="4/5"
             placeholderLabel="Recepção da clínica"
           />
           <div className="absolute -bottom-8 -right-3 w-28 rounded-[var(--radius-lg)] border-4 border-(--color-surface) sm:w-36 lg:-right-10 lg:w-44">
             <ClinicImage
-              src="/images/clinic/consulting-room.jpg"
+              src={images.consultingRoom}
               alt="Consultório da clínica"
               ratio="1/1"
               placeholderLabel="Consultório"
