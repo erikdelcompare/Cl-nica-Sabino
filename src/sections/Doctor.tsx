@@ -1,51 +1,88 @@
 import { Reveal } from '../components/Reveal'
-import { SectionKicker } from '../components/SectionKicker'
-import { CLINIC } from '../lib/site-config'
-import doctorPhoto from '../assets/photo-doctor.jpg'
+import { ClinicImage } from '../components/ClinicImage'
+import { clinicData } from '../lib/clinic-data'
 
+const { copy, team, yearsExperience } = clinicData
+
+/**
+ * Autoridade profissional apresentada de forma sóbria.
+ * CRM, RQE e tempo de experiência só aparecem quando preenchidos em
+ * `clinic-data.ts` — enquanto vazios, simplesmente não são renderizados.
+ */
 export function Doctor() {
-  return (
-    <section className="relative overflow-hidden bg-(--color-warm-white) py-24 sm:py-32">
-      <div className="mx-auto grid max-w-[1400px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20 lg:px-12">
-        <Reveal>
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[1.75rem] shadow-[0_24px_70px_-28px_rgba(23,23,26,0.4)]">
-            <img
-              src={doctorPhoto}
-              alt="Dr. Clodoaldo Sabino da Silva em seu consultório na Sabino Especialidades Médicas"
-              className="h-full w-full object-cover"
-              width={410}
-              height={397}
-              loading="lazy"
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background: 'linear-gradient(190deg, rgba(11,11,12,0) 55%, rgba(11,11,12,0.6) 100%)',
-              }}
-            />
-            <div className="absolute inset-0 rounded-[1.75rem] ring-1 ring-inset ring-(--color-gold)/20" />
-            <div className="absolute bottom-6 left-6 right-6">
-              <p className="text-xs uppercase tracking-[0.22em] text-(--color-gold-light)/90">
-                Pediatria &amp; Neonatologia
-              </p>
-            </div>
-          </div>
-        </Reveal>
+  if (team.length === 0) return null
 
-        <Reveal delay={0.1}>
-          <SectionKicker tone="dark">O médico</SectionKicker>
-          <h2 className="mt-5 font-display text-4xl font-medium leading-[1.12] text-(--color-charcoal) sm:text-5xl">
-            {CLINIC.doctorName}
-          </h2>
-          <p className="mt-3 text-sm font-semibold uppercase tracking-[0.2em] text-(--color-gold-deep)">
-            {CLINIC.doctorSpecialty}
-          </p>
-          <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-(--color-charcoal)/75">
-            {CLINIC.doctorExperience.replace('Mais', 'Com mais')}, o {CLINIC.doctorName} conduz o atendimento
-            pediátrico da Sabino Especialidades Médicas em {CLINIC.city}, acompanhando crianças e orientando
-            famílias com atenção e proximidade.
-          </p>
-        </Reveal>
+  return (
+    <section id="profissional" className="bg-(--color-graphite) py-20 sm:py-28 lg:py-32">
+      <div className="shell">
+        {team.map((member) => (
+          <div
+            key={member.id}
+            className="grid gap-12 lg:grid-cols-[minmax(0,40fr)_minmax(0,60fr)] lg:items-center lg:gap-20"
+          >
+            <ClinicImage
+              src={member.photo}
+              alt={`${member.fullName}, ${member.specialty}`}
+              ratio="4/5"
+              placeholderLabel="Retrato profissional"
+              tone="dark"
+              className="mx-auto w-full max-w-sm lg:max-w-none"
+            />
+
+            <Reveal>
+              <p className="eyebrow eyebrow-invert">{copy.doctorEyebrow}</p>
+
+              <h2 className="mt-5 font-display text-[2.125rem] leading-[1.14] text-(--color-ink-invert) sm:text-[2.75rem]">
+                {member.name}
+              </h2>
+
+              {/* Credenciais: cada linha aparece só se estiver preenchida. */}
+              <dl className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.875rem]">
+                <div className="flex items-center gap-2">
+                  <dt className="sr-only">Especialidade</dt>
+                  <dd className="font-medium uppercase tracking-[0.14em] text-(--color-gold-light)">
+                    {member.specialty}
+                  </dd>
+                </div>
+
+                {member.secondarySpecialty && (
+                  <div className="flex items-center gap-2 border-l border-(--color-line-invert) pl-5">
+                    <dt className="sr-only">Área relacionada</dt>
+                    <dd className="text-(--color-ink-invert-soft)">{member.secondarySpecialty}</dd>
+                  </div>
+                )}
+
+                {member.crm && (
+                  <div className="flex items-center gap-2 border-l border-(--color-line-invert) pl-5">
+                    <dt className="text-(--color-ink-invert-soft)">CRM</dt>
+                    <dd className="text-(--color-ink-invert)">{member.crm}</dd>
+                  </div>
+                )}
+
+                {member.rqe && (
+                  <div className="flex items-center gap-2 border-l border-(--color-line-invert) pl-5">
+                    <dt className="text-(--color-ink-invert-soft)">RQE</dt>
+                    <dd className="text-(--color-ink-invert)">{member.rqe}</dd>
+                  </div>
+                )}
+              </dl>
+
+              <p className="mt-7 max-w-xl text-pretty text-[1.0625rem] leading-relaxed text-(--color-ink-invert-soft)">
+                {member.bio}
+              </p>
+
+              {/* Faixa de experiência — só com autorização da clínica. */}
+              {yearsExperience && (
+                <p className="mt-8 border-t border-(--color-line-invert) pt-6 font-display text-[1.75rem] text-(--color-ink-invert)">
+                  {yearsExperience}+ anos
+                  <span className="ml-2 font-sans text-[0.9375rem] text-(--color-ink-invert-soft)">
+                    dedicados à Pediatria
+                  </span>
+                </p>
+              )}
+            </Reveal>
+          </div>
+        ))}
       </div>
     </section>
   )

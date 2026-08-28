@@ -1,77 +1,128 @@
 @import 'tailwindcss';
 
+/* ==========================================================================
+   SABINO ESPECIALIDADES MÉDICAS — SISTEMA VISUAL
+   Clean, editorial e institucional. O refinamento vem do espaço, do
+   alinhamento e da tipografia — não de efeitos.
+   ========================================================================== */
+
 @theme {
-  --font-display: 'Fraunces', 'Iowan Old Style', 'Georgia', serif;
-  --font-sans: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+  /* Tipografia --------------------------------------------------------- */
+  --font-display: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  --color-dark: #0b0b0c;
-  --color-graphite: #17171a;
-  --color-charcoal: #262521;
-  --color-warm-white: #f7f5f0;
-  --color-warm-white-dim: #ece8de;
+  /* Superfícies (a página é predominantemente clara) ------------------- */
+  --color-canvas: #f7f6f2; /* fundo principal off-white */
+  --color-surface: #ffffff; /* blocos brancos */
+  --color-sand: #f2f0ea; /* bege discreto, para alternar seções */
+  --color-graphite: #262626; /* único fundo escuro, usado com parcimônia */
+  --color-graphite-deep: #1c1c1c;
 
-  --color-gold: #c9a24c;
-  --color-gold-light: #e8ce8a;
-  --color-gold-deep: #8a6b28;
-  --color-gold-soft: #d9b56a;
+  /* Texto --------------------------------------------------------------- */
+  --color-ink: #252525; /* texto principal */
+  --color-ink-soft: #696969; /* texto secundário */
+  --color-ink-invert: #f7f6f2; /* texto sobre grafite */
+  --color-ink-invert-soft: #b9b6ae;
 
-  --animate-float-slow: float-slow 9s ease-in-out infinite;
-  --animate-float-slower: float-slow 14s ease-in-out infinite;
-  --animate-spin-slow: spin-slow 60s linear infinite;
-  --animate-spin-slower: spin-slow 120s linear infinite;
-  --animate-pulse-soft: pulse-soft 3.5s ease-in-out infinite;
-  --animate-drift: drift 22s ease-in-out infinite;
+  /* Linhas -------------------------------------------------------------- */
+  --color-line: #e6e2da;
+  --color-line-strong: #d5cfc2;
+  --color-line-invert: #3d3d3d;
+
+  /* Dourado — matiz extraída da logo (42°), usado só como detalhe ------- */
+  --color-gold: #c4a24e; /* filetes, bordas, marcadores */
+  --color-gold-ink: #84692a; /* texto dourado sobre fundo claro (AA) */
+  --color-gold-light: #dcbd77; /* texto/detalhe dourado sobre grafite (AA) */
+
+  /* Raios contidos ------------------------------------------------------ */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
 }
 
 @layer base {
-  * {
-    border-color: theme(--color-charcoal);
-  }
-
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem; /* compensa o header fixo nas âncoras */
   }
 
   body {
-    background-color: var(--color-dark);
-    color: var(--color-warm-white);
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
     font-family: var(--font-sans);
+    font-synthesis-weight: none;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-
-  ::selection {
-    background: var(--color-gold);
-    color: var(--color-dark);
-  }
-
-  :focus-visible {
-    outline: 2px solid var(--color-gold);
-    outline-offset: 3px;
   }
 
   h1,
   h2,
-  h3,
-  h4 {
+  h3 {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    font-weight: 500;
+    letter-spacing: -0.005em;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
+  ::selection {
+    background: var(--color-gold);
+    color: #fff;
+  }
 
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.001ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.001ms !important;
-      scroll-behavior: auto !important;
+  :focus-visible {
+    outline: 2px solid var(--color-gold-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@layer components {
+  /* Faixa fina de largura máxima usada por todas as seções. */
+  .shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 78rem;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .shell {
+      padding-inline: 2rem;
     }
+  }
+
+  @media (min-width: 1024px) {
+    .shell {
+      padding-inline: 3rem;
+    }
+  }
+
+  /* Rótulo editorial acima dos títulos de seção. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gold-ink);
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 1.5rem;
+    height: 1px;
+    background: var(--color-gold);
+  }
+
+  .eyebrow-invert {
+    color: var(--color-gold-light);
   }
 }
 
@@ -80,74 +131,54 @@
     text-wrap: balance;
   }
 
-  .gold-text-gradient {
-    background: linear-gradient(115deg, var(--color-gold-deep) 0%, var(--color-gold-light) 45%, var(--color-gold-soft) 75%, var(--color-gold-deep) 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  .text-pretty {
+    text-wrap: pretty;
   }
 
-  .gold-rule {
-    background: linear-gradient(90deg, var(--color-gold-deep), var(--color-gold-light));
+  /* Entrada discreta ao rolar: apenas opacidade + deslocamento mínimo. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
   }
 
-  /* Requer que o próprio elemento já defina um contexto de posicionamento
-     (relative, fixed, absolute...) — não force `position` aqui para evitar
-     conflito de cascata com utilitárias de posição do Tailwind. */
-  .noise-overlay::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.035;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-}
-
-@keyframes float-slow {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(0, -18px, 0);
-  }
-}
-
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes pulse-soft {
-  0%,
-  100% {
-    opacity: 0.55;
-    transform: scale(1);
-  }
-  50% {
+  .reveal.is-visible {
     opacity: 1;
-    transform: scale(1.06);
+    transform: none;
+  }
+
+  /* Revelação de imagem: leve aproximação, sem flutuação contínua. */
+  .reveal-image img {
+    transform: scale(1.04);
+    transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal-image.is-visible img {
+    transform: none;
   }
 }
 
-@keyframes drift {
-  0% {
-    transform: translate(0, 0);
+/* Respeita quem prefere menos movimento: tudo aparece, nada se desloca. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-  33% {
-    transform: translate(10px, -14px);
+
+  .reveal,
+  .reveal-image img {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
-  66% {
-    transform: translate(-8px, 8px);
-  }
-  100% {
-    transform: translate(0, 0);
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

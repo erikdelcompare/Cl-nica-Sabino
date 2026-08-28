@@ -1,37 +1,42 @@
-import { clsx } from 'clsx'
 import type { AnchorHTMLAttributes } from 'react'
+import { clsx } from 'clsx'
 import { ArrowRightIcon, WhatsAppIcon } from './icons'
 
-type ButtonVariant = 'gold' | 'outline' | 'outline-dark' | 'ghost'
+type Variant = 'primary' | 'outline' | 'outline-invert' | 'gold'
 
 type ButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
-  variant?: ButtonVariant
-  size?: 'md' | 'lg'
-  withWhatsAppIcon?: boolean
+  variant?: Variant
+  size?: 'sm' | 'md' | 'lg'
+  withWhatsApp?: boolean
   withArrow?: boolean
 }
 
 const base =
-  'group relative inline-flex items-center justify-center gap-2.5 rounded-full font-medium tracking-wide transition-all duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--color-gold)'
+  'group inline-flex items-center justify-center gap-2.5 rounded-[var(--radius-sm)] font-medium transition-colors duration-300 ease-out'
 
-const variants: Record<ButtonVariant, string> = {
-  gold: 'bg-gradient-to-b from-(--color-gold-light) to-(--color-gold-deep) text-(--color-dark) shadow-[0_8px_30px_-8px_rgba(201,162,76,0.55)] hover:shadow-[0_10px_36px_-6px_rgba(201,162,76,0.7)] hover:brightness-[1.05] active:scale-[0.98]',
+const variants: Record<Variant, string> = {
+  /* Grafite sólido — ação principal sobre fundo claro. */
+  primary: 'bg-(--color-graphite) text-(--color-ink-invert) hover:bg-(--color-graphite-deep)',
+  /* Contorno sobre fundo claro. */
   outline:
-    'border border-(--color-warm-white)/25 text-(--color-warm-white) hover:border-(--color-gold)/70 hover:text-(--color-gold-light) active:scale-[0.98]',
-  'outline-dark':
-    'border border-(--color-charcoal)/20 text-(--color-charcoal) hover:border-(--color-gold-deep)/70 hover:text-(--color-gold-deep) active:scale-[0.98]',
-  ghost: 'text-(--color-warm-white) hover:text-(--color-gold-light) active:scale-[0.98]',
+    'border border-(--color-line-strong) text-(--color-ink) hover:border-(--color-ink) hover:bg-(--color-ink)/[0.03]',
+  /* Contorno sobre grafite. */
+  'outline-invert':
+    'border border-(--color-line-invert) text-(--color-ink-invert) hover:border-(--color-gold-light) hover:text-(--color-gold-light)',
+  /* Dourado — reservado ao CTA final. */
+  gold: 'bg-(--color-gold) text-[#2b2210] hover:bg-[#b89644]',
 }
 
 const sizes = {
-  md: 'px-6 py-3 text-sm',
-  lg: 'px-8 py-4 text-base',
+  sm: 'px-4 py-2.5 text-[0.8125rem]',
+  md: 'px-5 py-3 text-sm',
+  lg: 'px-7 py-3.5 text-[0.9375rem]',
 }
 
 export function Button({
-  variant = 'gold',
+  variant = 'primary',
   size = 'md',
-  withWhatsAppIcon = false,
+  withWhatsApp = false,
   withArrow = false,
   className,
   children,
@@ -39,10 +44,10 @@ export function Button({
 }: ButtonProps) {
   return (
     <a className={clsx(base, variants[variant], sizes[size], className)} {...rest}>
-      {withWhatsAppIcon && <WhatsAppIcon className="h-[1.1em] w-[1.1em] shrink-0" />}
+      {withWhatsApp && <WhatsAppIcon className="h-[1.15em] w-[1.15em] shrink-0" />}
       <span>{children}</span>
       {withArrow && (
-        <ArrowRightIcon className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+        <ArrowRightIcon className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5" />
       )}
     </a>
   )

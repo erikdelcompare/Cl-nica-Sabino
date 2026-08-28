@@ -1,55 +1,104 @@
 # Sabino Especialidades Médicas — Landing Page
 
-Landing page premium da Sabino Especialidades Médicas (São Gabriel do Oeste — MS), construída para
-apresentar a clínica, destacar o atendimento pediátrico e os exames laboratoriais, e conduzir o
-visitante para agendamento pelo WhatsApp.
+Página institucional da Sabino Especialidades Médicas (São Gabriel do Oeste — MS).
+Direção clean, editorial e médica: o refinamento vem do espaço, do alinhamento,
+da fotografia e da tipografia — não de efeitos.
 
 ## Stack
 
 - **Vite + React 19 + TypeScript**
-- **Tailwind CSS v4** (tokens de design em `src/index.css`, via `@theme`)
-- **Framer Motion** para reveals no scroll, parallax discreto no Hero e o menu mobile
-- Sem bibliotecas de 3D/WebGL — a profundidade e os elementos "tridimensionais" são feitos com
-  gradientes CSS e SVG (`src/components/decor`), mantendo o bundle leve
+- **Tailwind CSS v4** — tokens de design em `src/index.css` (bloco `@theme`)
+- **Zero bibliotecas de animação.** As entradas ao rolar usam ~20 linhas de
+  `IntersectionObserver` (`src/hooks/useReveal.ts`) + transições CSS.
 
-## Estrutura
+Bundle de produção: **69 kB gzip** (JS) + 6,6 kB gzip (CSS).
 
-```
-src/
-  assets/         # logo oficial da clínica (recortada do material enviado, sem redesenho)
-  components/      # Header, Footer, botões, ícones, elementos decorativos
-  hooks/           # scroll, parallax, lock de scroll do menu mobile
-  lib/             # site-config.ts — dados centrais da clínica (endereço, WhatsApp, textos)
-  sections/        # uma seção por arquivo (Hero, About, Pediatria, Services, ...)
-```
+## Onde editar o conteúdo
 
-Todos os textos são autorais, em português, sem Lorem Ipsum e sem alegações médicas não
-comprovadas pelos materiais fornecidos pela clínica.
+**Todo o conteúdo editável está em `src/lib/clinic-data.ts`.** Endereço, telefone,
+textos, serviços, corpo clínico e credenciais ficam nesse único arquivo — não é
+preciso mexer nos componentes.
 
-## Rodando localmente
+### Campos que aguardam confirmação da clínica
+
+O arquivo segue uma regra simples: **campo vazio não é renderizado**. Nada de
+"[A CONFIRMAR]" aparece para o visitante. Basta preencher quando a clínica
+autorizar:
+
+| Campo | O que passa a aparecer |
+|---|---|
+| `team[].crm` / `team[].rqe` | Registro profissional ao lado da especialidade |
+| `yearsExperience` | Faixa "27+ anos dedicados à Pediatria" |
+| `openingHours` | Bloco de horários na seção Localização |
+| `specialties` | Seção inteira de especialidades (oculta enquanto vazia) |
+| `examTypes` | Lista de exames na seção Exames |
+| `insurances` | Convênios aceitos |
+| `contact.email` | E-mail no rodapé |
+
+> A referência pública aos ~27 anos de experiência e à atuação em Neonatologia
+> vem de publicação jornalística local de 2025. `yearsExperience` está como
+> `null` de propósito — preencha apenas após autorização da clínica.
+
+## Fotografias
+
+As imagens são espaços reservados nomeados. Para publicar uma foto oficial,
+basta salvar o arquivo com o nome correto em `public/images/` — sem tocar no
+código. Consulte **[`public/images/README.md`](public/images/README.md)** para a
+tabela completa de arquivos, proporções e orientações de fotografia.
+
+Três fotos já publicadas vieram do perfil oficial **@clinicasabino**: a recepção
+(topo da página), o Dr. Clodoaldo (seção Profissional) e a vista da cidade
+(Localização). Os demais espaços exibem um reservado sóbrio enquanto aguardam as
+fotos oficiais — nenhuma imagem genérica é apresentada como foto real da unidade.
+
+## Comandos
 
 ```bash
 npm install
-npm run dev       # ambiente de desenvolvimento
-npm run build     # build de produção (tsc + vite build)
-npm run lint       # oxlint
-npm run preview    # pré-visualiza o build de produção
+npm run dev       # desenvolvimento
+npm run build     # produção (tsc + vite build)
+npm run lint      # oxlint
+npm run preview   # pré-visualiza o build
 ```
 
 ## Antes de publicar
 
-- **Domínio**: atualize `SITE_URL` em `src/lib/site-config.ts` e as URLs absolutas em
-  `index.html` (canonical, Open Graph, Twitter) e em `public/robots.txt` / `public/sitemap.xml`
-  para o domínio real da clínica.
-- **Mapa**: a seção de Localização usa o embed público do Google Maps (sem chave de API). Em
-  ambientes com acesso à internet ele carrega normalmente.
+1. **Domínio** — trocar `SITE_URL` em `src/lib/clinic-data.ts` e as URLs
+   absolutas em `index.html` (canonical, Open Graph, Twitter),
+   `public/robots.txt` e `public/sitemap.xml`.
+2. **Legendas dos reservados** — mudar `showImagePlaceholders` para `false` em
+   `src/lib/clinic-data.ts`, removendo o texto "Fotografia oficial será inserida
+   após aprovação" dos espaços ainda sem foto.
+3. **Mapa** — a seção Localização usa o embed público do Google Maps, sem chave
+   de API. Ele carrega normalmente em ambientes com acesso à internet.
 
-## Decisões de conteúdo
+## Sistema visual
 
-- **Depoimentos e galeria de fotos** foram deliberadamente omitidos: não havia depoimentos
-  verificáveis nem fotografias em resolução suficiente para representar a clínica com honestidade.
-- **Dados do médico**: apenas nome, especialidade e tempo de experiência (informações públicas
-  confirmadas) foram usados. CRM, RQE, formação e certificações não constam por não estarem
-  disponíveis nos materiais fornecidos.
-- **Elementos visuais** (esferas douradas, moléculas em SVG, partículas) são composições
-  conceituais/abstratas — não se apresentam como fotografias reais da clínica.
+| Papel | Cor |
+|---|---|
+| Fundo principal | `#F7F6F2` |
+| Branco | `#FFFFFF` |
+| Bege (alternância) | `#F2F0EA` |
+| Grafite (áreas escuras) | `#262626` |
+| Texto principal | `#252525` |
+| Texto secundário | `#696969` |
+| Linhas | `#E6E2DA` |
+| Dourado (detalhe) | `#C4A24E` |
+| Dourado sobre fundo claro | `#84692A` |
+| Dourado sobre grafite | `#DCBD77` |
+
+O dourado foi extraído da matiz da própria logo (42°) e escalonado até atingir
+contraste AA. Todas as combinações de texto do site passam em WCAG AA
+(mínimo aferido: 4,57:1).
+
+Tipografia: **Cormorant Garamond** (títulos) e **Inter** (interface).
+
+A página é predominantemente clara; o grafite aparece só na seção do profissional
+e no CTA final, como contraste de fechamento.
+
+## Acessibilidade
+
+HTML semântico, um único `h1`, link "pular para o conteúdo", foco visível em
+todos os interativos, menu mobile com `aria-modal`/`inert` e fechamento por
+`Esc`, alvos de toque de 44 px, `alt` em todas as imagens e respeito a
+`prefers-reduced-motion` (as entradas são desligadas, o conteúdo aparece direto).

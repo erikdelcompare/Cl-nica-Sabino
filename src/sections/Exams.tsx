@@ -1,49 +1,58 @@
 import { Reveal } from '../components/Reveal'
-import { SectionKicker } from '../components/SectionKicker'
 import { Button } from '../components/Button'
-import { FlaskIcon } from '../components/icons'
-import { WHATSAPP_MESSAGES, buildWhatsAppUrl } from '../lib/site-config'
+import { ClinicImage } from '../components/ClinicImage'
+import { clinicData, whatsappUrl } from '../lib/clinic-data'
+
+const { copy, examTypes } = clinicData
 
 export function Exams() {
   return (
-    <section id="exames" className="relative overflow-hidden bg-(--color-graphite) py-24 sm:py-32">
-      <div
-        className="absolute inset-0 opacity-90"
-        style={{
-          background: 'radial-gradient(65% 55% at 15% 15%, rgba(201,162,76,0.1) 0%, rgba(201,162,76,0) 55%)',
-        }}
-      />
+    <section id="exames" className="bg-(--color-surface) py-20 sm:py-28 lg:py-32">
+      <div className="shell grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
+        <ClinicImage
+          src="/images/clinic/laboratory.jpg"
+          alt="Coleta de exames laboratoriais na Sabino Especialidades Médicas"
+          ratio="4/3"
+          placeholderLabel="Coleta e laboratório"
+          className="mx-auto w-full max-w-md lg:max-w-none"
+        />
 
-      <div className="relative mx-auto grid max-w-[1400px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 lg:px-12">
-        <Reveal className="order-2 flex justify-center lg:order-1">
-          <div className="relative flex h-72 w-72 items-center justify-center rounded-full border border-(--color-gold)/20 sm:h-80 sm:w-80">
-            <div className="absolute inset-6 rounded-full border border-(--color-gold)/15" />
-            <div
-              className="absolute inset-0 rounded-full opacity-70"
-              style={{ background: 'radial-gradient(60% 60% at 50% 40%, rgba(201,162,76,0.18), transparent 70%)' }}
-            />
-            <FlaskIcon className="h-20 w-20 text-(--color-gold-light)" />
-          </div>
-        </Reveal>
+        <Reveal>
+          <p className="eyebrow">{copy.examsEyebrow}</p>
 
-        <Reveal delay={0.1} className="order-1 lg:order-2">
-          <SectionKicker>Exames laboratoriais</SectionKicker>
-          <h2 className="mt-5 text-balance font-display text-4xl font-medium leading-[1.12] text-(--color-warm-white) sm:text-5xl">
-            Exames com praticidade e cuidado em um só lugar.
+          <h2 className="mt-5 text-balance font-display text-[2.125rem] leading-[1.12] text-(--color-ink) sm:text-[2.75rem] lg:text-[3rem]">
+            {copy.examsTitle}
           </h2>
-          <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-(--color-warm-white)/70">
-            A Sabino Especialidades Médicas também oferece exames laboratoriais, reunindo agendamento e
-            acompanhamento em um único lugar, com atenção e comodidade para você e sua família.
-          </p>
-          <div className="mt-9">
+
+          <div className="mt-6 space-y-5 text-pretty text-[1.0625rem] leading-relaxed text-(--color-ink-soft)">
+            {copy.examsParagraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+
+          {/* Renderizado apenas quando a clínica confirmar a lista de exames. */}
+          {examTypes.length > 0 && (
+            <ul className="mt-8 grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
+              {examTypes.map((exam) => (
+                <li key={exam} className="flex items-start gap-3 text-[0.9375rem] text-(--color-ink)">
+                  <span aria-hidden="true" className="mt-2 h-px w-4 shrink-0 bg-(--color-gold)" />
+                  {exam}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="mt-10">
             <Button
-              href={buildWhatsAppUrl(WHATSAPP_MESSAGES.exames)}
+              href={whatsappUrl(
+                'Olá! Gostaria de consultar os exames laboratoriais disponíveis na Sabino Especialidades Médicas.',
+              )}
               target="_blank"
               rel="noopener noreferrer"
-              withWhatsAppIcon
-              withArrow
+              size="lg"
+              withWhatsApp
             >
-              Consultar disponibilidade
+              Consultar exames pelo WhatsApp
             </Button>
           </div>
         </Reveal>

@@ -1,37 +1,40 @@
-import { Footer } from './components/Footer'
 import { Header } from './components/Header'
+import { Footer } from './components/Footer'
 import { MobileCtaBar } from './components/MobileCtaBar'
-import { WhatsAppFloatingButton } from './components/WhatsAppFloatingButton'
-import { About } from './sections/About'
-import { Doctor } from './sections/Doctor'
-import { EmotionalBreak } from './sections/EmotionalBreak'
-import { Exams } from './sections/Exams'
-import { FinalCta } from './sections/FinalCta'
 import { Hero } from './sections/Hero'
-import { Location } from './sections/Location'
+import { Pillars } from './sections/Pillars'
+import { About } from './sections/About'
 import { Pediatria } from './sections/Pediatria'
-import { Services } from './sections/Services'
+import { Doctor } from './sections/Doctor'
+import { Exams } from './sections/Exams'
+import { Specialties } from './sections/Specialties'
+import { Gallery } from './sections/Gallery'
+import { Location } from './sections/Location'
+import { FinalCta } from './sections/FinalCta'
 
-function App() {
+/**
+ * Ritmo da página: claro → claro → bege → claro → off-white → claro →
+ * bege (condicional) → claro → off-white → grafite → rodapé claro.
+ * O grafite entra apenas no CTA final, como contraste de fechamento.
+ */
+export default function App() {
   return (
     <>
       <Header />
-      <main>
+      <main id="conteudo">
         <Hero />
+        <Pillars />
         <About />
         <Pediatria />
-        <Services />
-        <EmotionalBreak />
         <Doctor />
         <Exams />
+        <Specialties />
+        <Gallery />
         <Location />
         <FinalCta />
       </main>
       <Footer />
-      <WhatsAppFloatingButton />
       <MobileCtaBar />
     </>
   )
 }
-
-export default App

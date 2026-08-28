@@ -1,72 +1,65 @@
-import { Reveal, RevealGroup, RevealItem } from '../components/Reveal'
-import { SectionKicker } from '../components/SectionKicker'
+import { Reveal } from '../components/Reveal'
 import { Button } from '../components/Button'
-import { CompassGuideIcon, GrowthIcon, HeartHandsIcon, SyringeIcon } from '../components/icons'
-import { WHATSAPP_MESSAGES, buildWhatsAppUrl } from '../lib/site-config'
+import { ClinicImage } from '../components/ClinicImage'
+import { clinicData, whatsappUrl } from '../lib/clinic-data'
 
-const cuidados = [
-  { icon: HeartHandsIcon, label: 'Consultas pediátricas' },
-  { icon: GrowthIcon, label: 'Acompanhamento do desenvolvimento infantil' },
-  { icon: CompassGuideIcon, label: 'Orientação aos responsáveis' },
-  { icon: SyringeIcon, label: 'Orientação relacionada à vacinação' },
+const { copy } = clinicData
+
+const acompanhamento = [
+  'Consultas pediátricas e avaliação clínica',
+  'Acompanhamento do crescimento e do desenvolvimento',
+  'Orientação aos responsáveis',
+  'Orientação sobre o calendário de vacinação',
 ]
 
 export function Pediatria() {
   return (
-    <section
-      id="pediatria"
-      className="relative overflow-hidden bg-(--color-graphite) py-24 sm:py-32"
-    >
-      <div
-        className="absolute inset-0 opacity-90"
-        style={{
-          background:
-            'radial-gradient(70% 60% at 88% 12%, rgba(201,162,76,0.1) 0%, rgba(201,162,76,0) 55%)',
-        }}
-      />
+    <section id="pediatria" className="bg-(--color-sand) py-20 sm:py-28 lg:py-32">
+      <div className="shell grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
+        <Reveal className="lg:order-2">
+          <p className="eyebrow">{copy.pediatricsEyebrow}</p>
 
-      <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
-        <div className="max-w-2xl">
-          <Reveal>
-            <SectionKicker>Pediatria</SectionKicker>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <h2 className="mt-5 text-balance font-display text-4xl font-medium leading-[1.12] text-(--color-warm-white) sm:text-5xl">
-              Cuidado em cada fase da infância.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.16}>
-            <p className="mt-6 text-balance text-lg leading-relaxed text-(--color-warm-white)/70">
-              O acompanhamento pediátrico da Sabino Especialidades Médicas foi pensado para acolher a criança e
-              orientar a família em cada etapa do crescimento — com atenção, escuta e informação clara.
-            </p>
-          </Reveal>
-        </div>
+          <h2 className="mt-5 text-balance font-display text-[2.125rem] leading-[1.12] text-(--color-ink) sm:text-[2.75rem] lg:text-[3rem]">
+            {copy.pediatricsTitle}
+          </h2>
 
-        <RevealGroup className="mt-14 grid gap-x-8 gap-y-6 sm:grid-cols-2" stagger={0.1}>
-          {cuidados.map(({ icon: Icon, label }) => (
-            <RevealItem key={label}>
-              <div className="group flex items-center gap-4 rounded-2xl border border-(--color-warm-white)/10 bg-(--color-warm-white)/[0.03] p-5 transition-colors duration-300 hover:border-(--color-gold)/40">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-(--color-gold)/30 text-(--color-gold-light)">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <span className="text-[0.95rem] font-medium text-(--color-warm-white)/85">{label}</span>
-              </div>
-            </RevealItem>
-          ))}
-        </RevealGroup>
+          <div className="mt-6 space-y-5 text-pretty text-[1.0625rem] leading-relaxed text-(--color-ink-soft)">
+            {copy.pediatricsParagraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
 
-        <Reveal delay={0.1} className="mt-12">
-          <Button
-            href={buildWhatsAppUrl(WHATSAPP_MESSAGES.pediatria)}
-            target="_blank"
-            rel="noopener noreferrer"
-            withWhatsAppIcon
-            withArrow
-          >
-            Falar com a clínica
-          </Button>
+          <ul className="mt-9 space-y-3.5">
+            {acompanhamento.map((item) => (
+              <li key={item} className="flex items-start gap-3 text-[0.9375rem] text-(--color-ink)">
+                <span aria-hidden="true" className="mt-2 h-px w-4 shrink-0 bg-(--color-gold)" />
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-10">
+            <Button
+              href={whatsappUrl(
+                'Olá! Gostaria de agendar um atendimento pediátrico na Sabino Especialidades Médicas.',
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              size="lg"
+              withWhatsApp
+            >
+              Agendar atendimento pediátrico
+            </Button>
+          </div>
         </Reveal>
+
+        <ClinicImage
+          src="/images/clinic/pediatrics.jpg"
+          alt="Atendimento pediátrico na Sabino Especialidades Médicas"
+          ratio="4/5"
+          placeholderLabel="Atendimento pediátrico"
+          className="mx-auto w-full max-w-md lg:order-1 lg:max-w-none"
+        />
       </div>
     </section>
   )

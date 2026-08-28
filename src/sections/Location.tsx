@@ -1,82 +1,106 @@
 import { Reveal } from '../components/Reveal'
-import { SectionKicker } from '../components/SectionKicker'
 import { Button } from '../components/Button'
-import { PinIcon } from '../components/icons'
-import {
-  CLINIC,
-  MAPS_DIRECTIONS_URL,
-  MAPS_EMBED_URL,
-  WHATSAPP_MESSAGES,
-  buildWhatsAppUrl,
-} from '../lib/site-config'
+import { ClinicImage } from '../components/ClinicImage'
+import { clinicData, mapsDirectionsUrl, mapsEmbedUrl, whatsappUrl } from '../lib/clinic-data'
+import { PhoneIcon, PinIcon } from '../components/icons'
+
+const { copy, address, contact, openingHours } = clinicData
 
 export function Location() {
   return (
-    <section id="localizacao" className="bg-(--color-warm-white) py-24 sm:py-32">
-      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
-        <Reveal className="max-w-xl">
-          <SectionKicker tone="dark">Localização</SectionKicker>
-          <h2 className="mt-5 text-balance font-display text-4xl font-medium leading-[1.12] text-(--color-charcoal) sm:text-5xl">
-            Fácil de encontrar, no Centro de São Gabriel do Oeste.
+    <section id="localizacao" className="bg-(--color-canvas) py-20 sm:py-28 lg:py-32">
+      <div className="shell">
+        <Reveal className="max-w-2xl">
+          <p className="eyebrow">{copy.locationEyebrow}</p>
+          <h2 className="mt-5 text-balance font-display text-[2.125rem] leading-[1.12] text-(--color-ink) sm:text-[2.75rem] lg:text-[3rem]">
+            {copy.locationTitle}
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_1.3fr] lg:gap-10">
-          <Reveal delay={0.08} className="order-2 flex flex-col justify-center gap-8 lg:order-1">
-            <div>
-              <div className="flex items-start gap-3">
-                <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-(--color-charcoal)/15 text-(--color-gold-deep)">
-                  <PinIcon className="h-5 w-5" />
-                </span>
-                <div>
-                  <p className="font-display text-xl text-(--color-charcoal)">Sabino Especialidades Médicas</p>
-                  <p className="mt-1 text-[0.95rem] leading-relaxed text-(--color-charcoal)/65">
-                    {CLINIC.addressLine}
-                    <br />
-                    {CLINIC.city} — {CLINIC.state}, {CLINIC.postalCode}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-(--color-charcoal)/55">
-                    No Centro da cidade, nas proximidades do Hospital Municipal.
-                  </p>
-                </div>
+        <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,38fr)_minmax(0,62fr)] lg:gap-14">
+          <Reveal>
+            <div className="flex gap-4">
+              <PinIcon className="mt-0.5 h-5 w-5 shrink-0 text-(--color-gold-ink)" />
+              <div>
+                <p className="font-display text-xl text-(--color-ink)">{clinicData.name}</p>
+                <address className="mt-2 not-italic leading-relaxed text-(--color-ink-soft)">
+                  {address.street}
+                  <br />
+                  {address.district} — {address.city}/{address.state}
+                  <br />
+                  CEP {address.postalCode}
+                </address>
+                <p className="mt-3 text-[0.875rem] leading-relaxed text-(--color-ink-soft)">
+                  {address.reference}
+                </p>
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Button href={MAPS_DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" variant="outline-dark" withArrow>
-                Como chegar
-              </Button>
+            <div className="mt-8 flex gap-4 border-t border-(--color-line) pt-8">
+              <PhoneIcon className="mt-0.5 h-5 w-5 shrink-0 text-(--color-gold-ink)" />
+              <div>
+                <p className="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-(--color-ink-soft)">
+                  Telefone
+                </p>
+                <a
+                  href={`tel:+${contact.whatsapp}`}
+                  className="mt-1 block text-lg text-(--color-ink) transition-colors hover:text-(--color-gold-ink)"
+                >
+                  {contact.phone}
+                </a>
+              </div>
+            </div>
+
+            {/* Horários: renderizados apenas quando confirmados pela clínica. */}
+            {openingHours.length > 0 && (
+              <dl className="mt-8 border-t border-(--color-line) pt-8">
+                <dt className="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-(--color-ink-soft)">
+                  Atendimento
+                </dt>
+                {openingHours.map((entry) => (
+                  <dd key={entry.days} className="mt-2 flex justify-between gap-4 text-[0.9375rem]">
+                    <span className="text-(--color-ink-soft)">{entry.days}</span>
+                    <span className="text-(--color-ink)">{entry.hours}</span>
+                  </dd>
+                ))}
+              </dl>
+            )}
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button
-                href={buildWhatsAppUrl(WHATSAPP_MESSAGES.localizacao)}
+                href={mapsDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                withWhatsAppIcon
+                variant="outline"
+                withArrow
               >
-                Agendar pelo WhatsApp
+                Traçar rota
+              </Button>
+              <Button href={whatsappUrl()} target="_blank" rel="noopener noreferrer" withWhatsApp>
+                Falar pelo WhatsApp
               </Button>
             </div>
           </Reveal>
 
-          <Reveal delay={0.16} className="order-1 lg:order-2">
-            <div
-              className="aspect-[4/3] w-full overflow-hidden rounded-[1.75rem] border border-(--color-charcoal)/12 shadow-[0_20px_60px_-24px_rgba(23,23,26,0.35)] sm:aspect-[16/10]"
-              style={{
-                background:
-                  'radial-gradient(120% 100% at 20% 0%, rgba(201,162,76,0.14) 0%, rgba(201,162,76,0) 55%), linear-gradient(160deg, #f2efe6 0%, #e9e4d6 100%)',
-              }}
-            >
+          <div className="space-y-5">
+            <ClinicImage
+              src="/images/clinic/city.jpg"
+              alt={`Vista de ${address.city} — ${address.state}`}
+              ratio="21/9"
+              caption={`${address.city} — ${address.state}`}
+            />
+
+            <div className="overflow-hidden rounded-[var(--radius-lg)] border border-(--color-line)">
               <iframe
-                title="Mapa — Sabino Especialidades Médicas"
-                src={MAPS_EMBED_URL}
-                width="100%"
-                height="100%"
+                title={`Mapa — ${clinicData.name}`}
+                src={mapsEmbedUrl}
+                className="block h-[20rem] w-full sm:h-[22rem] lg:h-[24rem]"
                 style={{ border: 0 }}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                aria-label="Mapa de localização da Sabino Especialidades Médicas"
               />
             </div>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>

@@ -1,75 +1,70 @@
 import { Reveal } from '../components/Reveal'
-import { SectionKicker } from '../components/SectionKicker'
-import { CLINIC } from '../lib/site-config'
+import { ClinicImage } from '../components/ClinicImage'
+import { clinicData } from '../lib/clinic-data'
 import { InstagramIcon } from '../components/icons'
-import aerialPhoto from '../assets/photo-aerial.jpg'
 
-const highlights = ['São Gabriel do Oeste — MS', 'Atendimento Pediátrico', 'Exames Laboratoriais']
+const { copy, address, contact } = clinicData
 
 export function About() {
   return (
-    <section id="clinica" className="relative overflow-hidden bg-(--color-warm-white) py-24 sm:py-32">
-      <div className="mx-auto grid max-w-[1400px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20 lg:px-12">
-        <Reveal className="order-2 lg:order-1">
-          <div className="relative mx-auto w-full max-w-lg overflow-hidden rounded-[1.75rem] shadow-[0_24px_70px_-28px_rgba(23,23,26,0.4)]">
-            <img
-              src={aerialPhoto}
-              alt="Vista aérea de São Gabriel do Oeste — MS, cidade onde a Sabino Especialidades Médicas atende"
-              className="aspect-[16/10] w-full object-cover"
-              width={410}
-              height={248}
-              loading="lazy"
+    <section id="clinica" className="bg-(--color-surface) py-20 sm:py-28 lg:py-32">
+      <div className="shell grid gap-12 lg:grid-cols-[minmax(0,42fr)_minmax(0,58fr)] lg:items-center lg:gap-20">
+        {/* Composição fotográfica: uma vertical grande + um recorte menor. */}
+        <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
+          <ClinicImage
+            src="/images/clinic/reception.jpg"
+            alt={`Recepção da ${clinicData.name}`}
+            ratio="4/5"
+            placeholderLabel="Recepção da clínica"
+          />
+          <div className="absolute -bottom-8 -right-3 w-28 rounded-[var(--radius-lg)] border-4 border-(--color-surface) sm:w-36 lg:-right-10 lg:w-44">
+            <ClinicImage
+              src="/images/clinic/consulting-room.jpg"
+              alt="Consultório da clínica"
+              ratio="1/1"
+              placeholderLabel="Consultório"
+              compact
             />
-            <div
-              className="absolute inset-0"
-              style={{
-                background: 'linear-gradient(0deg, rgba(11,11,12,0.7) 0%, rgba(11,11,12,0.05) 45%)',
-              }}
-            />
-            <div className="absolute inset-0 rounded-[1.75rem] ring-1 ring-inset ring-(--color-gold)/20" />
-            <div className="absolute bottom-5 left-5 right-5">
-              <p className="text-xs uppercase tracking-[0.2em] text-(--color-gold-light)/90">
-                {CLINIC.city} — {CLINIC.state}
-              </p>
-              <p className="mt-1 text-sm text-(--color-warm-white)/85">{CLINIC.addressLine}</p>
-            </div>
           </div>
-        </Reveal>
+        </div>
 
-        <Reveal delay={0.1} className="order-1 lg:order-2">
-          <SectionKicker tone="dark">A Sabino</SectionKicker>
-          <h2 className="mt-5 text-balance font-display text-4xl font-medium leading-[1.12] text-(--color-charcoal) sm:text-5xl">
-            Medicina próxima. Cuidado que acompanha.
+        <Reveal className="mt-10 lg:mt-0">
+          <p className="eyebrow">{copy.aboutEyebrow}</p>
+
+          <h2 className="mt-5 text-balance font-display text-[2.125rem] leading-[1.12] text-(--color-ink) sm:text-[2.75rem] lg:text-[3rem]">
+            {copy.aboutTitle}
           </h2>
-          <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-(--color-charcoal)/75">
-            A Sabino Especialidades Médicas atua em São Gabriel do Oeste com um compromisso simples: oferecer um
-            atendimento próximo, atencioso e cuidadoso a cada paciente que passa pela clínica. Aqui, o cuidado
-            pediátrico e os exames laboratoriais fazem parte de uma mesma proposta — acompanhar a saúde da sua
-            família com atenção e clareza, do primeiro contato ao retorno.
+
+          <div className="mt-6 space-y-5 text-pretty text-[1.0625rem] leading-relaxed text-(--color-ink-soft)">
+            {copy.aboutParagraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+
+          {/* Serviços como lista editorial com filetes — sem cards. */}
+          <dl className="mt-10 border-t border-(--color-line)">
+            {clinicData.services.map((service) => (
+              <div key={service.id} className="border-b border-(--color-line) py-5">
+                <dt className="font-display text-xl text-(--color-ink)">{service.title}</dt>
+                <dd className="mt-1.5 text-[0.9375rem] leading-relaxed text-(--color-ink-soft)">
+                  {service.description}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <p className="mt-8 text-[0.9375rem] text-(--color-ink-soft)">
+            {address.street} — {address.district}, {address.city} — {address.state}
           </p>
 
-          <ul className="mt-8 flex flex-wrap gap-3">
-            {highlights.map((item) => (
-              <li
-                key={item}
-                className="rounded-full border border-(--color-charcoal)/15 px-4 py-2 text-sm font-medium text-(--color-charcoal)/80"
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-
           <a
-            href={CLINIC.instagramUrl}
+            href={contact.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group mt-9 inline-flex items-center gap-2 text-sm font-medium text-(--color-charcoal)/70 transition-colors hover:text-(--color-gold-deep)"
+            className="mt-3 inline-flex items-center gap-2 text-[0.9375rem] text-(--color-ink) underline decoration-(--color-gold) decoration-1 underline-offset-4 transition-colors hover:text-(--color-gold-ink)"
           >
             <InstagramIcon className="h-4 w-4" />
-            <span className="relative">
-              Acompanhe o dia a dia da clínica {CLINIC.instagramHandle}
-              <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-current transition-transform duration-300 group-hover:scale-x-100" />
-            </span>
+            Acompanhe a clínica no Instagram
           </a>
         </Reveal>
       </div>
