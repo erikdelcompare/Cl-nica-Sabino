@@ -1,7 +1,5 @@
 import { Reveal } from '../components/Reveal'
 import { Button } from '../components/Button'
-import { GoldOrb } from '../components/decor/GoldOrb'
-import { ParticleField } from '../components/decor/ParticleField'
 import { WHATSAPP_MESSAGES, buildWhatsAppUrl } from '../lib/site-config'
 
 export function FinalCta() {
@@ -12,13 +10,9 @@ export function FinalCta() {
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(60% 70% at 50% 100%, rgba(201,162,76,0.18) 0%, rgba(201,162,76,0) 60%), linear-gradient(180deg, #0b0b0c 0%, #0e0e10 100%)',
+            'radial-gradient(60% 70% at 50% 100%, rgba(201,162,76,0.16) 0%, rgba(201,162,76,0) 60%), linear-gradient(180deg, #0b0b0c 0%, #0e0e10 100%)',
         }}
       />
-      <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-25">
-        <GoldOrb size={620} animate={false} />
-      </div>
-      <ParticleField count={16} className="opacity-60" />
 
       <div className="relative mx-auto max-w-2xl px-6 text-center">
         <Reveal>

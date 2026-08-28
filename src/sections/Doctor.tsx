@@ -1,23 +1,31 @@
 import { Reveal } from '../components/Reveal'
 import { SectionKicker } from '../components/SectionKicker'
 import { CLINIC } from '../lib/site-config'
+import doctorPhoto from '../assets/photo-doctor.jpg'
 
 export function Doctor() {
   return (
     <section className="relative overflow-hidden bg-(--color-warm-white) py-24 sm:py-32">
       <div className="mx-auto grid max-w-[1400px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20 lg:px-12">
         <Reveal>
-          <div className="relative mx-auto flex aspect-[4/5] w-full max-w-md items-center justify-center overflow-hidden rounded-[2rem] bg-gradient-to-br from-(--color-dark) via-(--color-graphite) to-(--color-charcoal)">
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[1.75rem] shadow-[0_24px_70px_-28px_rgba(23,23,26,0.4)]">
+            <img
+              src={doctorPhoto}
+              alt="Dr. Clodoaldo Sabino da Silva em seu consultório na Sabino Especialidades Médicas"
+              className="h-full w-full object-cover"
+              width={410}
+              height={397}
+              loading="lazy"
+            />
             <div
               className="absolute inset-0"
               style={{
-                background: 'radial-gradient(70% 55% at 70% 20%, rgba(201,162,76,0.22) 0%, rgba(201,162,76,0) 60%)',
+                background: 'linear-gradient(190deg, rgba(11,11,12,0) 55%, rgba(11,11,12,0.6) 100%)',
               }}
             />
-            <div className="absolute inset-6 rounded-[1.5rem] border border-(--color-gold)/25" />
-            <span className="gold-text-gradient font-display text-[7.5rem] leading-none">CS</span>
-            <div className="absolute bottom-8 left-8 right-8 text-center">
-              <p className="text-xs uppercase tracking-[0.25em] text-(--color-warm-white)/50">
+            <div className="absolute inset-0 rounded-[1.75rem] ring-1 ring-inset ring-(--color-gold)/20" />
+            <div className="absolute bottom-6 left-6 right-6">
+              <p className="text-xs uppercase tracking-[0.22em] text-(--color-gold-light)/90">
                 Pediatria &amp; Neonatologia
               </p>
             </div>

@@ -1,16 +1,12 @@
 import { Reveal } from '../components/Reveal'
 import { SectionKicker } from '../components/SectionKicker'
 import { Button } from '../components/Button'
-import { GoldOrb } from '../components/decor/GoldOrb'
 import { FlaskIcon } from '../components/icons'
 import { WHATSAPP_MESSAGES, buildWhatsAppUrl } from '../lib/site-config'
 
 export function Exams() {
   return (
     <section id="exames" className="relative overflow-hidden bg-(--color-graphite) py-24 sm:py-32">
-      <div className="pointer-events-none absolute -left-28 bottom-0 hidden opacity-40 lg:block">
-        <GoldOrb size={300} tone="graphite" />
-      </div>
       <div
         className="absolute inset-0 opacity-90"
         style={{

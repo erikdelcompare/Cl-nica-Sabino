@@ -1,8 +1,6 @@
 import { Reveal, RevealGroup, RevealItem } from '../components/Reveal'
 import { SectionKicker } from '../components/SectionKicker'
 import { Button } from '../components/Button'
-import { GoldOrb } from '../components/decor/GoldOrb'
-import { SparkleField } from '../components/decor/SparkleField'
 import { CompassGuideIcon, GrowthIcon, HeartHandsIcon, SyringeIcon } from '../components/icons'
 import { WHATSAPP_MESSAGES, buildWhatsAppUrl } from '../lib/site-config'
 
@@ -23,13 +21,9 @@ export function Pediatria() {
         className="absolute inset-0 opacity-90"
         style={{
           background:
-            'radial-gradient(70% 60% at 88% 12%, rgba(201,162,76,0.12) 0%, rgba(201,162,76,0) 55%)',
+            'radial-gradient(70% 60% at 88% 12%, rgba(201,162,76,0.1) 0%, rgba(201,162,76,0) 55%)',
         }}
       />
-      <div className="pointer-events-none absolute -right-32 top-1/3 hidden opacity-50 lg:block">
-        <GoldOrb size={340} />
-      </div>
-      <SparkleField className="hidden lg:block" count={7} />
 
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <div className="max-w-2xl">

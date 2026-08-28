@@ -1,8 +1,8 @@
 import { Reveal } from '../components/Reveal'
 import { SectionKicker } from '../components/SectionKicker'
-import { MoleculeGraphic } from '../components/decor/MoleculeGraphic'
 import { CLINIC } from '../lib/site-config'
 import { InstagramIcon } from '../components/icons'
+import aerialPhoto from '../assets/photo-aerial.jpg'
 
 const highlights = ['São Gabriel do Oeste — MS', 'Atendimento Pediátrico', 'Exames Laboratoriais']
 
@@ -11,21 +11,27 @@ export function About() {
     <section id="clinica" className="relative overflow-hidden bg-(--color-warm-white) py-24 sm:py-32">
       <div className="mx-auto grid max-w-[1400px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20 lg:px-12">
         <Reveal className="order-2 lg:order-1">
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[2rem] bg-gradient-to-br from-(--color-charcoal) via-(--color-graphite) to-(--color-dark)">
+          <div className="relative mx-auto w-full max-w-lg overflow-hidden rounded-[1.75rem] shadow-[0_24px_70px_-28px_rgba(23,23,26,0.4)]">
+            <img
+              src={aerialPhoto}
+              alt="Vista aérea de São Gabriel do Oeste — MS, cidade onde a Sabino Especialidades Médicas atende"
+              className="aspect-[16/10] w-full object-cover"
+              width={410}
+              height={248}
+              loading="lazy"
+            />
             <div
-              className="absolute inset-0 opacity-80"
+              className="absolute inset-0"
               style={{
-                background:
-                  'radial-gradient(85% 65% at 20% 10%, rgba(201,162,76,0.28) 0%, rgba(201,162,76,0) 55%)',
+                background: 'linear-gradient(0deg, rgba(11,11,12,0.7) 0%, rgba(11,11,12,0.05) 45%)',
               }}
             />
-            <MoleculeGraphic className="absolute left-1/2 top-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 opacity-90" />
-            <div className="absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-(--color-gold)/20" />
-            <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-(--color-warm-white)/10 bg-(--color-dark)/40 p-4 backdrop-blur-md">
+            <div className="absolute inset-0 rounded-[1.75rem] ring-1 ring-inset ring-(--color-gold)/20" />
+            <div className="absolute bottom-5 left-5 right-5">
               <p className="text-xs uppercase tracking-[0.2em] text-(--color-gold-light)/90">
                 {CLINIC.city} — {CLINIC.state}
               </p>
-              <p className="mt-1 text-sm text-(--color-warm-white)/80">{CLINIC.addressLine}</p>
+              <p className="mt-1 text-sm text-(--color-warm-white)/85">{CLINIC.addressLine}</p>
             </div>
           </div>
         </Reveal>
