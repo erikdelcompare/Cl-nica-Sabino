@@ -13,7 +13,7 @@ Tudo fica dentro desta pasta. Nada foi instalado no sistema: Node.js, Python, FF
 | `exportacoes/` | Vídeos finais e legendas |
 | `edicao/remotion/` | Projeto Remotion |
 | `edicao/hyperframes/` | Projeto HyperFrames |
-| `edicao/scripts/` | Atalhos de transcrição e remoção de silêncio |
+| `edicao/scripts/` | Atalhos de transcrição, narração, download e remoção de silêncio |
 | `edicao/.venv/` | Ambiente Python com Whisper e yt-dlp (fora do Git) |
 
 O conteúdo de `videos-brutos/`, `referencias/` e `exportacoes/` não vai para o Git.
@@ -29,6 +29,7 @@ O conteúdo de `videos-brutos/`, `referencias/` e `exportacoes/` não vai para o
 | HyperFrames | 0.9.36 | `edicao/hyperframes/node_modules` |
 | Whisper (openai-whisper) | 20250625, com PyTorch 2.15.0 | `edicao/.venv` |
 | yt-dlp | 2026.10.26 | `edicao/.venv` |
+| Kokoro (voz) | 0.9.4 | `edicao/.venv` |
 
 ## Reinstalar
 
@@ -51,7 +52,7 @@ npx remotion render src/index.ts Teste ../../exportacoes/video.mp4
 npx remotion still  src/index.ts Teste ../../exportacoes/capa.png --frame=45
 ```
 
-`remotion.config.ts` aponta para o Chrome Headless Shell que já existe nesta máquina, porque a rede bloqueia o download do navegador do próprio Remotion. Em outra máquina, defina `REMOTION_BROWSER` ou deixe o Remotion baixar o dele.
+`remotion.config.ts` aponta para o Chrome Headless Shell que já existe nesta máquina, para não baixar outro navegador. Em outra máquina, defina `REMOTION_BROWSER` ou deixe o Remotion baixar o dele.
 
 O Remotion é gratuito para indivíduos e empresas de até 3 pessoas; acima disso exige licença paga.
 
@@ -113,23 +114,39 @@ edicao/scripts/transcrever.sh videos-brutos/a.mp4 --model medium --word_timestam
 | `medium` | 1,4 GB | melhor para português, mais lento |
 | `large-v3` | 2,9 GB | máxima qualidade, muito lento sem GPU |
 
-O modelo é baixado no primeiro uso para `edicao/modelos-whisper/` (de `openaipublic.azureedge.net`); depois disso a transcrição roda sem internet. Sem GPU, espere algo próximo do tempo real com `small` e bem mais com `medium`.
+O modelo é baixado no primeiro uso para `edicao/modelos-whisper/` ; depois disso a transcrição roda sem internet. Sem GPU, espere algo próximo do tempo real com `small` e bem mais com `medium`.
 
 ## 5. yt-dlp
 
 ```bash
-# Melhor qualidade em MP4
-edicao/.venv/bin/yt-dlp -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/b" \
-  -o "referencias/%(title)s.%(ext)s" "URL"
+# Baixa em MP4 (até 1080p) para referencias/
+edicao/scripts/baixar.sh "URL"
 
 # Só o áudio
-edicao/.venv/bin/yt-dlp -x --audio-format mp3 -o "referencias/%(title)s.%(ext)s" "URL"
+edicao/scripts/baixar.sh "URL" -x --audio-format mp3
 
 # Só um trecho (1:00 a 1:30)
-edicao/.venv/bin/yt-dlp --download-sections "*1:00-1:30" -o "referencias/%(title)s.%(ext)s" "URL"
+edicao/scripts/baixar.sh "URL" --download-sections "*1:00-1:30"
 ```
 
-**Limitação nesta máquina na nuvem:** a rede bloqueia YouTube, Vimeo, Instagram e afins, então o yt-dlp só baixa de hosts liberados. Para usar com esses sites, mude o acesso de rede do ambiente `cl-nica-sabino` nas configurações (o YouTube precisa de `*.googlevideo.com`, que só pode ser liberado por lá) ou rode o yt-dlp no seu computador e coloque o arquivo em `referencias/`.
+**Limitação nesta máquina na nuvem:** a rede está liberada, mas o YouTube recusa downloads vindos de servidores de nuvem ("Sign in to confirm you're not a bot") e o Vimeo exige login. O yt-dlp lê título e duração, mas não baixa o vídeo. Alternativas: baixar no seu computador e colocar o arquivo em `referencias/`, ou fornecer um arquivo de cookies da sua conta (`--cookies arquivo.txt`), o que expõe a conta a risco de bloqueio.
+
+## 6. Narração (Kokoro, local)
+
+Gera voz em português do Brasil sem enviar nada para fora.
+
+```bash
+edicao/.venv/bin/python edicao/scripts/narrar.py "Texto da narração" exportacoes/narracao.wav
+edicao/.venv/bin/python edicao/scripts/narrar.py --arquivo roteiro.txt exportacoes/narracao.wav \
+  --voz pm_alex --velocidade 1.1
+```
+
+Vozes: `pf_dora` (feminina, padrão), `pm_alex` e `pm_santa` (masculinas). O modelo (cerca de 330 MB) é baixado do Hugging Face no primeiro uso para `edicao/modelos-voz/`. Licença Apache 2.0, uso comercial permitido.
+
+## O que ainda não está instalado
+
+- **Música de fundo:** o gerador local disponível (MusicGen) tem licença que proíbe uso comercial, então não foi instalado. Use trilhas licenciadas colocadas em `referencias/`.
+- **Banco de imagens e vídeos:** Pexels e Pixabay exigem uma chave de API gratuita da sua conta.
 
 ## Testes feitos na instalação
 
@@ -140,6 +157,6 @@ edicao/.venv/bin/yt-dlp --download-sections "*1:00-1:30" -o "referencias/%(title
 | FFmpeg | Corte, junção, remoção de silêncio (6,00 s → 4,23 s) e exportação 480p | OK |
 | Whisper | Transcrição de áudio de 11 s em inglês com o modelo `base`, saída `.srt` | OK |
 | yt-dlp | Download de um arquivo de áudio por URL direta | OK |
-| yt-dlp | YouTube | Bloqueado pela rede |
-
-O Whisper foi testado só em inglês; ainda não rodou em um áudio em português.
+| yt-dlp | YouTube e Vimeo | Lê os dados do vídeo, mas o site recusa o download nesta máquina |
+| Kokoro | Narração de 6,9 s em português, vozes `pf_dora` e `pm_alex` | OK |
+| Whisper | Transcrição dessa narração em português com o modelo `small` | OK |

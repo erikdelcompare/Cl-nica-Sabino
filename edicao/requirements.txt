@@ -1,2 +1,4 @@
 openai-whisper==20250625
-yt-dlp==2026.10.26
+yt-dlp[default]==2026.10.26
+kokoro==0.9.4
+soundfile
