@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Edição de vídeo: mídia e ambientes locais não vão para o Git
+videos-brutos/*
+referencias/*
+exportacoes/*
+!videos-brutos/.gitkeep
+!referencias/.gitkeep
+!exportacoes/.gitkeep
+edicao/.venv
+edicao/modelos-whisper
+edicao/remotion/out
+edicao/hyperframes/renders

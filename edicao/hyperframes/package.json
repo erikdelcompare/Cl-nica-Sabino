@@ -1,0 +1,14 @@
+{
+  "name": "edicao-hyperframes",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "HYPERFRAMES_NO_TELEMETRY=1 hyperframes preview",
+    "check": "HYPERFRAMES_NO_TELEMETRY=1 hyperframes check",
+    "render": "HYPERFRAMES_NO_TELEMETRY=1 hyperframes render",
+    "publish": "HYPERFRAMES_NO_TELEMETRY=1 hyperframes publish"
+  },
+  "devDependencies": {
+    "hyperframes": "0.9.36"
+  }
+}
