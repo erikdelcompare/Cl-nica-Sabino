@@ -1,0 +1,54 @@
+{
+  "name": "rio-branco-solar-projetista",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "db:start": "supabase start -x studio,imgproxy,logflare,vector,edge-runtime,realtime,postgres-meta,supavisor,mailpit",
+    "db:reset": "supabase db reset",
+    "proprietario:criar": "tsx scripts/criar-proprietario.ts",
+    "seed:catalogo": "tsx scripts/seed.ts --catalogo",
+    "seed:demo": "tsx scripts/seed.ts --catalogo --demo",
+    "test:unit": "vitest run",
+    "db:migrar-producao": "supabase db push"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.2",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.119.0",
+    "next": "16.4.6",
+    "pdf-lib": "^1.17.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1",
+    "three": "^0.187.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/three": "^0.187.0",
+    "dotenv": "^18.0.10",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.6",
+    "supabase": "^3.1.0",
+    "tailwindcss": "4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "^5",
+    "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "description": "Projetista Solar 3D — Rio Branco Solar: clientes, projetos fotovoltaicos 2D/3D, orçamentos e propostas por link com PIN."
+}
